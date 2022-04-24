@@ -33,3 +33,5 @@ export interface StrapiPaginationByOffcet {
     */
     withCount?: boolean
 }
+
+export type StrapiPagination = StrapiPaginationByOffcet | StrapiPaginationByPage;
