@@ -2,14 +2,17 @@
   "name": "strapi-rest-api-types",
   "version": "0.0.1",
   "description": "Strapi client types for REST API",
-  "main": "src/index.ts",
+  "main": "src/index.d.ts",
   "repository": "git@github.com:tema1411/strapi-rest-api-types.git",
   "author": "artemilcenko <D9bCKDxLw3SnBKT>",
   "license": "MIT",
   "devDependencies": {
     "@sindresorhus/tsconfig": "^2.0.0",
-    "tsd": "^0.20.0",
+    "type-fest": "^2.12.2",
     "typescript": "^4.6.3",
     "xo": "^0.48.0"
+  },
+  "dependencies": {
+    "expect-type": "^0.13.0"
   }
 }
