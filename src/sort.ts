@@ -1,4 +1,5 @@
-import {isNever, StrapiDataModel, StrapiModelWithoutPopulate} from "src/helpers";
+import {StrapiDataModel, StrapiModelWithoutPopulate} from "src/helpers";
+import {IsNever} from 'expect-type';
 
 export const enum StrapiSortType {
   Ascending = "asc",
@@ -13,6 +14,6 @@ export type StrapiSortBySingleField<
 
 export type StrapiSortByFieldArray<
   DataModel extends StrapiDataModel,
-> = isNever<StrapiSortBySingleField<DataModel>> extends true ? never : Array<StrapiSortBySingleField<DataModel>>
+> = IsNever<StrapiSortBySingleField<DataModel>> extends true ? never : Array<StrapiSortBySingleField<DataModel>>
 
 export type StrapiSort<DataModel extends StrapiDataModel> = StrapiSortBySingleField<DataModel> | StrapiSortByFieldArray<DataModel>
