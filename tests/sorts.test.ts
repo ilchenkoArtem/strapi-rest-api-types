@@ -4,7 +4,6 @@ import {expectTypeOf} from 'expect-type'
 import {StrapiSort} from 'src/sort';
 
 /*----------- Sort by single field -----------*/
-//Get never if data model contain only populate
 type SortBySingleFieldForComplexModel = "primitiveField" | "primitiveField:desc" | "primitiveField:asc"
 expectTypeOf<StrapiSortBySingleField<TestComplexModel>>().toEqualTypeOf<SortBySingleFieldForComplexModel>();
 

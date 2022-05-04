@@ -7,7 +7,7 @@ export interface TestComponent extends StrapiComponentDTO {
 export type TestDynamicZone = TestComponent[]
 
 export interface TestDefaultObjectRelation extends StrapiBaseDTO {
-  street: string;
+  primitiveField: string;
 }
 
 export type TestDefaultArrayRelation = TestDefaultObjectRelation[]

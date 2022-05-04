@@ -1,4 +1,4 @@
-import {StrapiDataModel, StrapiModelWithoutPopulate} from "src/helpers";
+import {StrapiDataModel, StrapiModelWithoutRelation} from "src/helpers";
 import {IsNever} from 'expect-type';
 
 export const enum StrapiSortType {
@@ -8,7 +8,7 @@ export const enum StrapiSortType {
 
 export type StrapiSortBySingleField<
   DataModel extends StrapiDataModel,
-  Key = keyof StrapiModelWithoutPopulate<DataModel>
+  Key = keyof StrapiModelWithoutRelation<DataModel>
 > = Key extends string ? `${Key}:${StrapiSortType}` | Key : never;
 
 

@@ -1,4 +1,10 @@
-import {StrapiDataModel, StrapiModelWithoutPopulate} from 'src/helpers';
+import {
+  Clear,
+  GetStrapiModelByPopulate,
+  IsAvailableRelationForDeepFilter,
+  StrapiDataModel,
+  StrapiModelWithoutRelation
+} from 'src/helpers';
 
 export type StrapiFilterValue = string | number | boolean
 
@@ -74,9 +80,14 @@ export type StrapiFilterByBaseOperators = {
 }
 
 export type StrapiBaseFilter<Model extends StrapiDataModel> = {
-  [Key in keyof StrapiModelWithoutPopulate<Model>]?: StrapiFilterByBaseOperators
+  [Key in keyof StrapiModelWithoutRelation<Model>]?: StrapiFilterByBaseOperators
 }
 
 export type StrapiConditionFilter<Model extends StrapiDataModel> = {
-  [Key in StrapiConditionFilterOperator]?: StrapiBaseFilter<Model>[]
+  [Key in StrapiConditionFilterOperator]?: StrapiBaseFilter<Clear<Model>>[]
+}
+
+export type StrapiDeepFilter<Model extends StrapiDataModel> = StrapiBaseFilter<Model> | StrapiConditionFilter<Model>
+export type StrapiDeepFilter2<Model extends StrapiDataModel> = StrapiBaseFilter<Model> | StrapiConditionFilter<Model> & {
+  [Key in keyof Model as IsAvailableRelationForDeepFilter<Model[Key]> extends true ? Key : never]?: StrapiDeepFilter<GetStrapiModelByPopulate<Model[Key]>>
 }
