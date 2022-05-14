@@ -1,3 +1,4 @@
+import {expectType} from 'tsd';
 import {expectTypeOf} from 'expect-type'
 import {
   StrapiBaseFilter,
@@ -7,10 +8,8 @@ import {
   StrapiDeepFilter,
   StrapiFilterValue
 } from 'src/filters';
-import {
-  TestComplexModel,
-  TestModel
-} from 'tests/tests-model.test';
+import {TestModel} from 'tests/tests-model.test';
+import {Primitive} from 'type-fest';
 
 interface BaseFilter {
   [StrapiBaseFilterOperator.Equal]?: StrapiFilterValue
@@ -33,9 +32,11 @@ interface BaseFilter {
 }
 
 interface ModelBaseFilter {
-  id?: BaseFilter
+  id?: BaseFilter | Primitive
 }
-expectTypeOf<StrapiBaseFilter<TestModel>>().toEqualTypeOf<ModelBaseFilter>()
+
+declare const exampleModelBaseFilter: StrapiBaseFilter<TestModel>;
+expectType<ModelBaseFilter>(exampleModelBaseFilter)
 
 
 interface ModelConditionFilter {
@@ -45,13 +46,28 @@ interface ModelConditionFilter {
 expectTypeOf<StrapiConditionFilter<TestModel>>().toEqualTypeOf<ModelConditionFilter>()
 
 
-interface ConditionFirstLevelFilter {
-  primitiveField?: BaseFilter
+interface TestDeepFilterModel {
+  primitiveField?: string
+  primitiveField2?: string
 }
 
 interface DeepFilter {
-  primitiveField?: BaseFilter
-  [StrapiConditionFilterOperator.Or]?:  ConditionFirstLevelFilter[]
-  [StrapiConditionFilterOperator.And]?: ConditionFirstLevelFilter[]
+  primitiveField?: BaseFilter | Primitive
+  primitiveField2?: BaseFilter | Primitive
+  [StrapiConditionFilterOperator.Or]?: {
+    primitiveField?: BaseFilter | Primitive
+    primitiveField2?: BaseFilter | Primitive
+  }[]
+  [StrapiConditionFilterOperator.And]?: {
+    primitiveField?: BaseFilter | Primitive
+    primitiveField2?: BaseFilter | Primitive
+  }[]
 }
-expectTypeOf<StrapiDeepFilter<TestComplexModel>>().toEqualTypeOf<DeepFilter>()
+
+const Test:StrapiDeepFilter<TestDeepFilterModel> = {
+
+}
+
+declare const exampleStrapiFilter: StrapiDeepFilter<TestDeepFilterModel>;
+expectType<DeepFilter>(exampleStrapiFilter);
+expectTypeOf<DeepFilter>().toEqualTypeOf<StrapiDeepFilter<TestDeepFilterModel>>();
